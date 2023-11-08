@@ -11,6 +11,11 @@ allow 172.16.3.56/25
 allow 172.16.3.57/25
 allow 172.16.3.58/25
 ```
+- Restart the server chronyd service
+```
+systemctl enable chronyd
+systemctl restart chronyd
+```
 ## For the clients(master and worker)
 - create chrony.conf file in bastion and encode with base64
 ```
@@ -95,3 +100,54 @@ spec:
 ```
 oc apply -f ntp_worker.yaml
 ```
+# Things to do after NTP server and client configuration
+1. first check the server(bastion) can detect the clients
+```
+chronyc clients
+```
+output 
+```
+Hostname                      NTP   Drop Int IntL Last     Cmd   Drop Int  Last
+===============================================================================
+master2.ocp4.imss.com          11      0   6   -    5d       0      0   -     -
+master0.ocp4.imss.com          59      0   6   -    5d       0      0   -     -
+localhost                       0      0   -   -     -       1      0   -    18
+
+has context menu
+```
+2. check the clients is pointing to master or not
+```
+chronyc sources
+````
+output should point to NTP server not to INTERNET, below o/p showing the internet
+````
+MS Name/IP address         Stratum Poll Reach LastRx Last sample
+===============================================================================
+^+ time.cloudflare.com           3  10   377    45  -3966us[-3966us] +/-   65ms
+^* 172-232-97-196.ip.linode>     2  10   377   271  +2241us[+2483us] +/-   26ms
+^- ntp2.ggsrv.de                 2  10   377   918    +15ms[  +15ms] +/-   98ms
+^+ ntp5.mum-in.hosts.301-mo>     2  10   377   991  -2230us[-1980us] +/-   66ms
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
