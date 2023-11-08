@@ -145,25 +145,3 @@ System clock synchronized: yes
           RTC in local TZ: no
 
 ```
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
