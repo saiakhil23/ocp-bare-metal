@@ -19,7 +19,7 @@ systemctl restart chronyd
 ## For the clients(master and worker)
 - create chrony.conf file in bastion and encode with base64
 ```
- vi chrony.conf
+ vi chrony_client.conf
 ```
 172.16.3.49 is our nfs server
 ```
@@ -29,6 +29,8 @@ makestep 1.0 3
 rtcsync
 logdir /var/log/chrony
 ```
+172.16.3.49 is our nfs server
+
 - crreate a yaml file for client machines (We use MachineConfig for both master and worker chrony.conf editing )
 ```
 vi ntp_master.yaml
@@ -128,7 +130,21 @@ MS Name/IP address         Stratum Poll Reach LastRx Last sample
 ^- ntp2.ggsrv.de                 2  10   377   918    +15ms[  +15ms] +/-   98ms
 ^+ ntp5.mum-in.hosts.301-mo>     2  10   377   991  -2230us[-1980us] +/-   66ms
 ```
+3. check the sync and active status of NTP service
+```
+sudo timedatectl
+```
+OUTPUT
+```
+               Local time: Wed 2023-11-08 16:21:37 IST
+           Universal time: Wed 2023-11-08 10:51:37 UTC
+                 RTC time: Wed 2023-11-08 10:51:37
+                Time zone: Asia/Kolkata (IST, +0530)
+System clock synchronized: yes
+              NTP service: active
+          RTC in local TZ: no
 
+```
 
 
 
