@@ -1,6 +1,3 @@
-```bash
-
-```
 
 # Deploying and Configuring Openshift Logging with Persistent Storage 
 
