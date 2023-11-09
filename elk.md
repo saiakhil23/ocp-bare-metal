@@ -93,6 +93,7 @@ Operators page.
 ## Create Cluster Logging Instance 
 > **Note:** Since we do not have any dynamic provisioing of pvc's wee need to create **PV's** and **StorageClass** separately
 > check at the end for pv and sc yaml
+
 • Create a cluster logging instance YAML manifest 
 
 • Create a Cluster Logging instance 
