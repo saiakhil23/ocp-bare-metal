@@ -94,7 +94,8 @@ Operators page.
 ◦ Ensure that Cluster Logging is listed in the openshift-logging project with a Status of Succeeded. 
 
 ## Create Cluster Logging Instance 
-
+> **Note:** Since we do not have any dynamic provisioing of pvc's wee need to create **PV's** and **StorageClass** separately
+> 
 • Create a cluster logging instance YAML manifest 
 
 • Create a Cluster Logging instance 
