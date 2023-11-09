@@ -95,7 +95,7 @@ Operators page.
 
 ## Create Cluster Logging Instance 
 > **Note:** Since we do not have any dynamic provisioing of pvc's wee need to create **PV's** and **StorageClass** separately
-> 
+> check at the end for pv and sc yaml
 • Create a cluster logging instance YAML manifest 
 
 • Create a Cluster Logging instance 
@@ -162,6 +162,61 @@ spec:
           cpu: 500m 
           memory: 1Gi 
     type: kibana
+```
+**Creating the PVC**
+```bash
+vi elk-pvc.yaml
+```
+```bash
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: elasticsearch-elasticsearch-cdm-qr26v78k-3
+spec:
+  accessModes:
+  - ReadWriteMany
+  resources:
+    requests:
+      storage: 500Gi
+  storageClassName: elk
+```
+**Creating the PV**
+```bash
+vi elk-pv.yaml
+```
+```bash
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: elk-pv
+spec:
+  capacity:
+    storage: 200Gi
+  accessModes:
+  - ReadWriteMany
+  nfs:
+    path: /home/shares/elk_share
+    server: 172.16.3.49
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: elk
+```
+**Creating the storage class**
+```bash
+vi elk-sc.yaml
+```
+```bash
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: elk
+provisioner: kubernetes.io/no-provisioner
+parameters:
+  type: nfs
+reclaimPolicy: Retain
+allowVolumeExpansion: true
+mountOptions:
+  - debug
+volumeBindingMode: Immediate
 ```
 • Create the ClusterLogging instance object as shown below 
 ```bash
